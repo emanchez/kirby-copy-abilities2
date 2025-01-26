@@ -12,7 +12,7 @@ const imageLoader = (props: any) => {
 
 type Props = { isAdmin: boolean }
 
-const AbilityMngmt: FC<Props> = (props: any) => {
+const AbilityMngmt: FC<Props> = (props) => {
     // react hook
     const [abilities, setAblilities] = React.useState({name: '', imgPath: '', description: '', id: null});
     // dexie hook to get data
