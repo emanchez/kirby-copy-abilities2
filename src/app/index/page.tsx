@@ -1,5 +1,5 @@
 import Nav from "@/components/nav"
-import KirbyAbilities from "@/components/KirbyAbilities"
+import AbilityMngmt from "@/components/AbilityMngmt";
 
 const Index = () => {
     return (
@@ -8,7 +8,7 @@ const Index = () => {
             <div>
                 <h1>Home page</h1>
             </div>
-            <KirbyAbilities />
+            <AbilityMngmt isAdmin={false} />
         </div>
     );
 }

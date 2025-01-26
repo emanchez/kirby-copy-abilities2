@@ -8,7 +8,7 @@ const Index = () => {
             <div>
                 <h1>Admin Mode</h1>
             </div>
-            <AbilityMngmt />
+            <AbilityMngmt isAdmin={true} />
         </div>
     );
 }
