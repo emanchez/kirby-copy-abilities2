@@ -25,7 +25,8 @@ export class DB extends Dexie {
             games: '++id, name, year, imgPath, description'
         });
         this.version(2).stores({
-            abilities: '++id, name, imgPath, description'
+            abilities: '++id, name, imgPath, description',
+            games: '++id, name, year, imgPath, description'
         });
     }
 }

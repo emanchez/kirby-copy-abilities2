@@ -6,45 +6,46 @@ import Image from "next/image";
 
 
 const imageLoader = (props: any) => {
-    return `/ability-art/${props.src}?w=${props.width}?q=${props.quality || 75}`
+    return `/game-art/${props.src}?w=${props.width}?q=${props.quality || 75}`
 }
 
 type Props = { isAdmin: boolean }
 
-const AbilityMngmt: FC<Props> = (props) => {
+const GameMngmt: FC<Props> = (props) => {
     // react hook
-    const [abilities, setAblilities] = React.useState({name: '', imgPath: '', description: '', id: null});
+    const [games, setGames] = React.useState({name: '', year: 0, imgPath: '', description: '', id: null});
     // dexie hook to get data
-    const abilityList = useLiveQuery(() => db.abilities.toArray());
+    const gamesArray = useLiveQuery(() => db.games.toArray());
 
     //add ability
-    const addAbility = React.useCallback(async () => {
-        if (abilities?.name && abilities?.imgPath){
-            await db.abilities.add({
-                name:abilities?.name,
-                imgPath: abilities?.imgPath,
-                description: abilities?.description
+    const addGame = React.useCallback(async () => {
+        if (games?.name && games?.imgPath){
+            await db.games.add({
+                name:games?.name,
+                year:games?.year,
+                imgPath: games?.imgPath,
+                description: games?.description
             });
-            setAblilities({name: '', imgPath: '', description: '', id: null})
+            setGames({name: '', year: 0, imgPath: '', description: '', id: null})
         }
-    }, [abilities]);
+    }, [games]);
 
-    //update ability
-    const updateAbility = React.useCallback(async () => {
-        if (abilities?.name && abilities?.imgPath){
-            await db.abilities.put({
-                id: Number(abilities?.id),
-                name: abilities?.name,
-                imgPath: abilities?.imgPath,
-                description: abilities?.description
+    //update game
+    const updateGame = React.useCallback(async () => {
+        if (games?.name && games?.imgPath){
+            await db.games.put({
+                name:games?.name,
+                year:games?.year,
+                imgPath: games?.imgPath,
+                description: games?.description
             });
-            setAblilities({name: '', imgPath: '', description: '', id: null});
+            setGames({name: '', year: 0, imgPath: '', description: '', id: null});
         }
-    }, [abilities])
+    }, [games])
 
     //delete ability
-    const deleteAbility = React.useCallback(async (id:any) => {
-        await db.abilities.delete(id);
+    const deleteGame = React.useCallback(async (id:any) => {
+        await db.games.delete(id);
     }, [])
 
     const TableHeadAdmin = () => { 
@@ -66,15 +67,15 @@ const AbilityMngmt: FC<Props> = (props) => {
         return (
             <tbody>
                 {
-                    abilityList?.map((i: any, index: number) => {
+                    gamesArray?.map((i: any, index: number) => {
                         return (
                             <tr key={index}>
                                 <td>{i.id}</td>
                                 <td>{i.name}</td>
                                 <td><Image loader={imageLoader} src={i.imgPath} width={500} height={500} alt={i.name} /></td>
                                 <td>{i.description}</td>
-                                <td><button onClick={() => setAblilities({...i})}>UPDATE</button></td>
-                                <td><button onClick={addAbility} onClickCapture={() => deleteAbility(i.id)}>DELETE</button></td>
+                                <td><button onClick={() => setGames({...i})}>UPDATE</button></td>
+                                <td><button onClick={addGame} onClickCapture={() => deleteGame(i.id)}>DELETE</button></td>
                             </tr>
                         )
                     })
@@ -97,7 +98,7 @@ const AbilityMngmt: FC<Props> = (props) => {
         return (
             <tbody>
                 {
-                    abilityList?.map((i: any, index: number) => {
+                    gamesArray?.map((i: any, index: number) => {
                         return (
                             <tr key={index}>
                                 <td>{i.name}</td>
@@ -123,9 +124,9 @@ const AbilityMngmt: FC<Props> = (props) => {
 
     // ability list component
 
-    const AbilityList = () => {
+    const GameList = () => {
         return (
-            <div className="ability-list">
+            <div className="game-list">
                 <table>
                     {tablehead}
                     {tablebody}
@@ -139,25 +140,27 @@ const AbilityMngmt: FC<Props> = (props) => {
             <>
                 <div>
                     <div>
-                        <h2>{abilities?.id ? 'Update' : 'Add'} Ability</h2>
+                        <h2>{games?.id ? 'Update' : 'Add'} Ability</h2>
                         <div>
                             <label htmlFor="Name">Name</label>
-                            <input type="text" value={abilities?.name} onChange={(e) => setAblilities({...abilities, name: e.target.value})} placeholder="Name" name="Name" required />
+                            <input type="text" value={games?.name} onChange={(e) => setGames({...games, name: e.target.value})} placeholder="Name" name="Name" required />
+                            <label htmlFor="Year">Year</label>
+                            <input type="number" min="0" max="9999" value={games?.year} onChange={(e) => setGames({...games, year: e.target.valueAsNumber})} placeholder="Year" name="Year" required />
                             <label htmlFor="imgPath"></label>
-                            <input type="text" value={abilities?.imgPath} onChange={(e) => setAblilities({...abilities, imgPath: e.target.value})} placeholder="Image Path" name="imgPath" required />
+                            <input type="text" value={games?.imgPath} onChange={(e) => setGames({...games, imgPath: e.target.value})} placeholder="Image Path" name="imgPath" required />
                             <label htmlFor="description"></label>
-                            <input type="text" value={abilities?.description} onChange={(e) => setAblilities({...abilities, description: e.target.value})} placeholder="Description" name="description" required />
+                            <input type="text" value={games?.description} onChange={(e) => setGames({...games, description: e.target.value})} placeholder="Description" name="description" required />
                             {
-                                abilities?.id ? (
-                                    <button onClick={updateAbility}>SUBMIT</button>
+                                games?.id ? (
+                                    <button onClick={updateGame}>SUBMIT</button>
                                 ) : (
-                                    <button onClick={addAbility}>ADD</button>
+                                    <button onClick={addGame}>ADD</button>
                                 )
                             }
                         </div>
 
                     <div>
-                        <AbilityList />
+                        <GameList />
                     </div>
                     </div>
                 </div>
@@ -167,12 +170,12 @@ const AbilityMngmt: FC<Props> = (props) => {
     else {
         return (
             <div>
-                <AbilityList />
+                <GameList />
             </div>
         )
     }
 
 }
 
-export default AbilityMngmt;
+export default GameMngmt;
 
