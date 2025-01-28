@@ -17,7 +17,7 @@ const GameMngmt: FC<Props> = (props) => {
     // dexie hook to get data
     const gamesArray = useLiveQuery(() => db.games.toArray());
 
-    //add ability
+    //add game
     const addGame = React.useCallback(async () => {
         if (games?.name && games?.imgPath){
             await db.games.add({
@@ -34,6 +34,7 @@ const GameMngmt: FC<Props> = (props) => {
     const updateGame = React.useCallback(async () => {
         if (games?.name && games?.imgPath){
             await db.games.put({
+                id: Number(games?.id),
                 name:games?.name,
                 year:games?.year,
                 imgPath: games?.imgPath,
@@ -43,7 +44,7 @@ const GameMngmt: FC<Props> = (props) => {
         }
     }, [games])
 
-    //delete ability
+    //delete game
     const deleteGame = React.useCallback(async (id:any) => {
         await db.games.delete(id);
     }, [])
