@@ -4,13 +4,14 @@ import { db } from "@/db/db.model";
 import { useLiveQuery } from "dexie-react-hooks"; 
 import Image from "next/image";
 
-
+// load images 
 const imageLoader = (props: any) => {
     return `/game-art/${props.src}?w=${props.width}?q=${props.quality || 75}`
 }
-
+// declare type for attributes of following component
 type Props = { isAdmin: boolean }
 
+// component to manage table for games and display data based on user priviledge level
 const GameMngmt: FC<Props> = (props) => {
     // react hook
     const [games, setGames] = React.useState({name: '', year: 0, imgPath: '', description: '', id: null});
@@ -141,7 +142,7 @@ const GameMngmt: FC<Props> = (props) => {
             <>
                 <div>
                     <div>
-                        <h2>{games?.id ? 'Update' : 'Add'} Ability</h2>
+                        <h2>{games?.id ? 'Update' : 'Add'} Game</h2>
                         <div>
                             <label htmlFor="Name">Name</label>
                             <input type="text" value={games?.name} onChange={(e) => setGames({...games, name: e.target.value})} placeholder="Name" name="Name" required />

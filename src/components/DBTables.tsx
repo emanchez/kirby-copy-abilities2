@@ -3,6 +3,7 @@
 import React, { FC, useState } from 'react';
 import AbilityMngmt from "@/components/AbilityMngmt";
 import GameMngmt from "@/components/GameMngmt";
+import GameAbilityMngmt from './GameAbilityMngmt';
 
 
 
@@ -15,11 +16,13 @@ const DBTables: FC<Props> = (props) => {
     const currentTable = () => {
         switch (currentIdx) {
             default:
-                return (<AbilityMngmt isAdmin={props.isAdmin} />)
+                return (<AbilityMngmt isAdmin={props.isAdmin} />);
             case 0:
-                return (<AbilityMngmt isAdmin={props.isAdmin} />)
+                return (<AbilityMngmt isAdmin={props.isAdmin} />);
             case 1:
-                return (<GameMngmt isAdmin={props.isAdmin} />)
+                return (<GameMngmt isAdmin={props.isAdmin} />);
+            case 2:
+                return (<GameAbilityMngmt isAdmin={props.isAdmin} />);
         }
     }
 
@@ -32,6 +35,7 @@ const DBTables: FC<Props> = (props) => {
             <div>
                 <button onClick={()=>setCurrent(0)}>Abilities</button>
                 <button onClick={()=>setCurrent(1)}>Games</button>
+                <button onClick={()=>setCurrent(2)}>Relationships</button>
             </div>
             <div>
                 {currentTable()}

@@ -15,18 +15,27 @@ export interface KirbyAbility {
     description: string;
 }
 
+export interface GameAbilityRelation {
+    id?: number;
+    gameNo: number;
+    abilityNo: number;
+}
+
 export class DB extends Dexie {
     abilities!: Table<KirbyAbility>;
     games!: Table<KirbyGame>;
+    gameAbilities!: Table<GameAbilityRelation>;
     constructor() {
         super('myDatabase');
         this.version(1).stores({
             abilities: '++id, name, imgPath',
-            games: '++id, name, year, imgPath, description'
+            games: '++id, name, year, imgPath, description',
+            gameAbilities: '++id, gameNo, abilityNo'
         });
         this.version(2).stores({
             abilities: '++id, name, imgPath, description',
-            games: '++id, name, year, imgPath, description'
+            games: '++id, name, year, imgPath, description',
+            gameAbilities: '++id, gameNo, abilityNo'
         });
     }
 }

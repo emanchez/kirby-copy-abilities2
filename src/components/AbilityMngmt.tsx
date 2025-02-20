@@ -4,19 +4,20 @@ import { db } from "@/db/db.model";
 import { useLiveQuery } from "dexie-react-hooks"; 
 import Image from "next/image";
 
-
+// load images 
 const imageLoader = (props: any) => {
     return `/ability-art/${props.src}?w=${props.width}?q=${props.quality || 75}`
 }
-
+// declare type for attributes of following component
 type Props = { isAdmin: boolean }
 
+// component to manage table for abilities and display data based on user priviledge level
 const AbilityMngmt: FC<Props> = (props) => {
     // react hook
     const [abilities, setAblilities] = React.useState({name: '', imgPath: '', description: '', id: null});
     // dexie hook to get data
     const abilityList = useLiveQuery(() => db.abilities.toArray());
-
+    
     //add ability
     const addAbility = React.useCallback(async () => {
         if (abilities?.name && abilities?.imgPath){
