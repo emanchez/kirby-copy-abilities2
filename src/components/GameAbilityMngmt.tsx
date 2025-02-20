@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { db } from "@/db/db.model";
 import { useLiveQuery } from "dexie-react-hooks"; 
 import Image from "next/image";
+import { liveQuery } from "dexie";
 
 // load images 
 const abilityImageLoader = (props: any) => {
@@ -20,20 +21,15 @@ const GameMngmt: FC<Props> = (props) => {
     const [gameAbilityRelationship, setRelationship] = React.useState({gameNo: 0, abilityNo: 0, id: null});
     // dexie hook to get data
     const gameAbilityArray = useLiveQuery(() => db.gameAbilities.toArray());
-    //db.gameAbilities.clear()
-    //add game-ability relationship
-
-    // TODO: on this page: https://stackoverflow.com/questions/76003177/error-while-adding-new-record-without-explicit-key-using-auto-inc-key-instead
-    // figure out a way to fix the dataerror issue by modifying the gameAbility table with a primary-key thats just the game name and ability name
-    // concatenated together
 
     //add game-ability relationship
     const addRelationship = React.useCallback(async () => {
         console.log(gameAbilityRelationship)
         if (gameAbilityRelationship?.gameNo && gameAbilityRelationship?.abilityNo){
             await db.gameAbilities.add({
+                bothNames: `${gameAbilityRelationship?.gameNo}_${gameAbilityRelationship?.abilityNo}`,
                 gameNo:gameAbilityRelationship?.gameNo,
-                abilityNo:gameAbilityRelationship?.abilityNo,
+                abilityNo:gameAbilityRelationship?.abilityNo
             });
             setRelationship({gameNo: 0, abilityNo: 0, id: null})
         }
@@ -44,6 +40,7 @@ const GameMngmt: FC<Props> = (props) => {
         if (gameAbilityRelationship?.gameNo && gameAbilityRelationship?.abilityNo){
             await db.gameAbilities.put({
                 id:Number(gameAbilityRelationship?.id),
+                bothNames: `${gameAbilityRelationship?.gameNo}_${gameAbilityRelationship?.abilityNo}`,
                 gameNo:gameAbilityRelationship?.gameNo,
                 abilityNo:gameAbilityRelationship?.abilityNo,
             });

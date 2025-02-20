@@ -17,6 +17,7 @@ export interface KirbyAbility {
 
 export interface GameAbilityRelation {
     id?: number;
+    bothNames: string;
     gameNo: number;
     abilityNo: number;
 }
@@ -36,6 +37,9 @@ export class DB extends Dexie {
             abilities: '++id, name, imgPath, description',
             games: '++id, name, year, imgPath, description',
             gameAbilities: '++id, gameNo, abilityNo'
+        });
+        this.version(3).stores({
+            gameAbilities: '++id, bothNames, gameNo, abilityNo'
         });
     }
 }
