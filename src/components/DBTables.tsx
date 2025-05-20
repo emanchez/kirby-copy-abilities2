@@ -32,13 +32,35 @@ const DBTables: FC<Props> = (props) => {
 
     return (
         <>
-            <div>
-                <button onClick={()=>setCurrent(0)}>Abilities</button>
-                <button onClick={()=>setCurrent(1)}>Games</button>
-                <button onClick={()=>setCurrent(2)}>Relationships</button>
-            </div>
-            <div>
-                {currentTable()}
+            <div className='mb-6'>
+                <div className='flex space-x-2 border-b border-gray-200 pb-2'>
+                    <button 
+                        onClick={()=>setCurrent(0)} 
+                        className={`px-4 py-4 rounded-t-lg font-medium transition-colors ${currentIdx === 0 ? 
+                            'bg-white text-black border-t border-l boreder-r border-gray-200' : 
+                            'text-white hover:bg-gray-500'}`}
+                    >
+                        Abilities
+                    </button>
+                    <button 
+                        onClick={()=>setCurrent(1)}
+                        className={`px-4 py-4 rounded-t-lg font-medium transition-colors ${currentIdx === 1 ? 
+                            'bg-white text-black border-t border-l boreder-r border-gray-200' : 
+                            'text-white hover:bg-gray-500'}`}
+                    >Games
+                    </button>
+                    <button 
+                        onClick={()=>setCurrent(2)}
+                        className={`px-4 py-4 rounded-t-lg font-medium transition-colors ${currentIdx === 2 ? 
+                            'bg-white text-black border-t border-l boreder-r border-gray-200' : 
+                            'text-white hover:bg-gray-500'}`}
+                    >
+                    Relationships
+                    </button>
+                </div>
+                <div>
+                    {currentTable()}
+                </div>
             </div>
         </>
     )
