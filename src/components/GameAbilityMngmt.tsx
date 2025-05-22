@@ -16,7 +16,7 @@ const gameImageLoader = (props: any) => {
 type Props = { isAdmin: boolean }
 
 // component to manage table for game-ability relationship and display data based on user priviledge level
-const GameMngmt: FC<Props> = (props) => {
+const GameAbilityMngmt: FC<Props> = (props) => {
     // react hook
     const [gameAbilityRelationship, setRelationship] = React.useState({gameNo: 0, abilityNo: 0, id: null});
     // dexie hook to get data
@@ -190,5 +190,5 @@ const GameMngmt: FC<Props> = (props) => {
 
 }
 
-export default GameMngmt;
+export default GameAbilityMngmt;
 

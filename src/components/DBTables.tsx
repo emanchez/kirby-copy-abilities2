@@ -1,70 +1,61 @@
-
+// components/DBTables.tsx
 'use client'
-import React, { FC, useState } from 'react';
-import AbilityMngmt from "@/components/AbilityMngmt";
-import GameMngmt from "@/components/GameMngmt";
-import GameAbilityMngmt from './GameAbilityMngmt';
+import React, { useState } from 'react';
+import { GamesManagement } from './admin/entities/Games';
+import { AbilitiesManagement } from './admin/entities/Abilities';
+import { GameAbilitiesManagement } from './admin/entities/GameAbilities';
 
-
-
-type Props = { isAdmin: boolean }
-
-const DBTables: FC<Props> = (props) => {
-
-    const [currentIdx, setCurrentIdx] = useState(0);
-    
-    const currentTable = () => {
-        switch (currentIdx) {
-            default:
-                return (<AbilityMngmt isAdmin={props.isAdmin} />);
-            case 0:
-                return (<AbilityMngmt isAdmin={props.isAdmin} />);
-            case 1:
-                return (<GameMngmt isAdmin={props.isAdmin} />);
-            case 2:
-                return (<GameAbilityMngmt isAdmin={props.isAdmin} />);
-        }
-    }
-
-    const setCurrent = (idx: number) => {
-        setCurrentIdx(idx);
-    }
-
-    return (
-        <>
-            <div className='mb-6'>
-                <div className='flex space-x-2 border-b border-gray-200 pb-2'>
-                    <button 
-                        onClick={()=>setCurrent(0)} 
-                        className={`px-4 py-4 rounded-t-lg font-medium transition-colors ${currentIdx === 0 ? 
-                            'bg-white text-black border-t border-l boreder-r border-gray-200' : 
-                            'text-white hover:bg-gray-500'}`}
-                    >
-                        Abilities
-                    </button>
-                    <button 
-                        onClick={()=>setCurrent(1)}
-                        className={`px-4 py-4 rounded-t-lg font-medium transition-colors ${currentIdx === 1 ? 
-                            'bg-white text-black border-t border-l boreder-r border-gray-200' : 
-                            'text-white hover:bg-gray-500'}`}
-                    >Games
-                    </button>
-                    <button 
-                        onClick={()=>setCurrent(2)}
-                        className={`px-4 py-4 rounded-t-lg font-medium transition-colors ${currentIdx === 2 ? 
-                            'bg-white text-black border-t border-l boreder-r border-gray-200' : 
-                            'text-white hover:bg-gray-500'}`}
-                    >
-                    Relationships
-                    </button>
-                </div>
-                <div>
-                    {currentTable()}
-                </div>
-            </div>
-        </>
-    )
+interface DBTablesProps {
+  isAdmin: boolean;
 }
 
+export const DBTables: React.FC<DBTablesProps> = ({ isAdmin }) => {
+  const [activeTab, setActiveTab] = useState<'games' | 'abilities' | 'relationships'>('games');
 
-export default DBTables;
+  return (
+    <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
+      <div className="border-b border-gray-700">
+        <nav className="flex -mb-px">
+          <button
+            onClick={() => setActiveTab('games')}
+            className={`whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm ${
+              activeTab === 'games'
+                ? 'border-indigo-500 text-indigo-400'
+                : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-500'
+            }`}
+          >
+            Games
+          </button>
+          <button
+            onClick={() => setActiveTab('abilities')}
+            className={`whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm ${
+              activeTab === 'abilities'
+                ? 'border-indigo-500 text-indigo-400'
+                : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-500'
+            }`}
+          >
+            Abilities
+          </button>
+          <button
+            onClick={() => setActiveTab('relationships')}
+            className={`whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm ${
+              activeTab === 'relationships'
+                ? 'border-indigo-500 text-indigo-400'
+                : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-500'
+            }`}
+          >
+            Relationships
+          </button>
+        </nav>
+      </div>
+
+      <div className="p-6 bg-gray-800">
+        {activeTab === 'games' && <GamesManagement isAdmin={isAdmin} />}
+        {activeTab === 'abilities' && <AbilitiesManagement isAdmin={isAdmin} />}
+        {activeTab === 'relationships' && <GameAbilitiesManagement isAdmin={isAdmin} />}
+      </div>
+    </div>
+  );
+};
+
+export default DBTables

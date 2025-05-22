@@ -1,34 +1,41 @@
-import Nav from "@/components/nav"
-import GameData from "@/components/GameData"
+import Nav from "@/components/nav";
+import GameData from "@/components/GameData";
+import AbilityData from "@/components/AbilityData";
+import { notFound } from 'next/navigation';
 
-async function Game({ params, }: { params: Promise<{ slug: string }> }) {
-    const slug = (await params).slug
-    return (
-        
-        <div className="min-h-screen flex">
-            {/* sidebar nav */}
-            <div className="w-64 border-r border-gray-200 shadow-sm">
-                <Nav />
-            </div>
-
-            {/* main content */}
-            <div className="flex-1 overflow-auto">
-                <div className="max-w-6x1 mx-auto px-6 py-8">
-                    {/* page header */}
-                    <div className="mb-8">
-                        <h1 className="text-3x1 font-bold">Game Page</h1>
-                        <p className="mt-2">information for game: {slug}</p>
-                    </div>
-
-                </div>
-                {/* content area */}
-                <div className="rounded-lg shadow-sm p-6 border border-gray-200">
-                    <GameData gameId={parseInt(slug)} />
-                </div>
-
-            </div>
-        </div>
-    );
+interface GamePageProps {
+  params: { slug: string };
 }
 
-export default Game;
+async function GamePage({ params }: GamePageProps) {
+  const gameId = parseInt(params.slug);
+  if (isNaN(gameId)) return notFound();
+
+  return (
+    <div className="min-h-screen flex bg-gray-900">
+      {/* Sidebar Navigation */}
+      <div className="w-64 border-r border-gray-800 bg-gray-900">
+        <Nav />
+      </div>
+
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-auto">
+        <div className="max-w-4xl mx-auto px-6 py-8">
+          {/* Game Data Section */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-100 mb-4">Game Information</h2>
+            <GameData gameId={gameId} />
+          </section>
+
+          {/* Abilities Section */}
+          <section>
+            <h2 className="text-2xl font-bold text-gray-100 mb-4">Abilities</h2>
+            <AbilityData gameId={gameId} />
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+export default GamePage;
