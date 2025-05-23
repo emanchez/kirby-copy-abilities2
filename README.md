@@ -1,3 +1,20 @@
+This is a mock Wiki site for one of my favorite Nintendo franchises. I used this project to learned about IndexedDb (aka in-browser storage) and using forms to populate a database. eventually I want to use an external database for more practicallity
+
+As a side note I plugged in the data for each entry manually with my own content. I didn't actually get info from the games themselves besides the images and date of publishing.
+
+/index 
+![Screenshot from 2025-05-22 21-59-06](https://github.com/user-attachments/assets/c7d9d018-5b51-4fd9-bcc4-7029b67683fd)
+
+/tables read only mode
+![Screenshot from 2025-05-22 21-59-21](https://github.com/user-attachments/assets/14f68e31-de47-4458-87ae-209ea45ae5f8)
+
+/tables admin mode
+![Screenshot from 2025-05-22 21-59-29](https://github.com/user-attachments/assets/ad00fc93-35ed-42f1-ab7a-1e5138a846f6)
+
+/game/{slug=gameId}
+![Screenshot from 2025-05-22 21-59-52](https://github.com/user-attachments/assets/02df7f87-f5eb-470a-a051-b7c4d9e02c85)
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
