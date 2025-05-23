@@ -1,6 +1,6 @@
 This is a mock Wiki site for one of my favorite Nintendo franchises. I used this project to learned about IndexedDb (aka in-browser storage) and using forms to populate a database. eventually I want to use an external database for more practicallity
 
-As a side note I plugged in the data for each entry manually with my own content. I didn't actually get info from the games themselves besides the images and date of publishing.
+As a side note I plugged in the data for each entry manually with my own content. I didn't actually get info from the games themselves besides the images and date of publishing for time saving purposes.
 
 /index 
 ![Screenshot from 2025-05-22 21-59-06](https://github.com/user-attachments/assets/c7d9d018-5b51-4fd9-bcc4-7029b67683fd)
